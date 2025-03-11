@@ -15,8 +15,9 @@ enum MovieListState {
 
 @Observable
 final class MovieListViewModel {
-    var movies: [Movie] = []
-    var viewState: MovieListState = .loading
+    
+    private(set) var movies: [Movie] = []
+    private(set) var viewState: MovieListState = .loading
     
     private let moviesRepository: MoviesRepositoryProtocol
     private var moviesResponse: MovieResponse?

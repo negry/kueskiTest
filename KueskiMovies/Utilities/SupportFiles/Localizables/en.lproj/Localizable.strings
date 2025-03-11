@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  KueskiMovies
+
+  Created by Alonso Orozco on 11/03/25.
+  
+*/
+
+// MARK: Movie List Strings
+"movieList.title" = "Popular Movies";
+"movieList.loadingTitle" = "Loading movies...";
+"movieList.errorTitle" = "An error has ocurred, try later";
