@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MoviesRepositoryProtocol {
-    func getPopularMovies(withCurrentPage page: Int) async throws -> [MovieResponse]
+    func getPopularMovies(withCurrentPage page: Int) async throws -> MovieResponse
 }
 
 final class MoviesRepository: MoviesRepositoryProtocol {
@@ -18,7 +18,7 @@ final class MoviesRepository: MoviesRepositoryProtocol {
         self.apiClient = apiClient
     }
     
-    func getPopularMovies(withCurrentPage page: Int) async throws -> [MovieResponse] {
+    func getPopularMovies(withCurrentPage page: Int) async throws -> MovieResponse {
         let endpoint = KueskiMoviesEndpoint.discoverMovies(page: page)
         return try await apiClient.fetchRequest(for: endpoint)
     }

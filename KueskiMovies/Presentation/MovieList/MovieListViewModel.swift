@@ -7,29 +7,34 @@
 
 import SwiftUI
 
+enum MovieListState {
+    case loading
+    case dataLoaded
+    case loadingFailed(String)
+}
+
 @Observable
 final class MovieListViewModel {
-    var movies: [MovieResponse] = []
-    var isLoading: Bool = false
-    var errorMessage: String?
+    var movies: [Movie] = []
+    var viewState: MovieListState = .loading
     
     private let moviesRepository: MoviesRepositoryProtocol
+    private var moviesResponse: MovieResponse?
     
     init(moviesRepository: MoviesRepositoryProtocol = MoviesRepository()) {
         self.moviesRepository = moviesRepository
     }
     
-    func fetchMovies(page: Int) async {
-        isLoading = true
-        defer {
-            isLoading = false
-        }
-        
+    func fetchMovies(page: Int, forceReload: Bool = false) async {
+        viewState = .loading
         do {
             let fetchedMovies = try await moviesRepository.getPopularMovies(withCurrentPage: page)
-            self.movies = fetchedMovies
+            moviesResponse = fetchedMovies
+            movies = fetchedMovies.results
+            viewState = .dataLoaded
         } catch {
-            errorMessage = error.localizedDescription
+            viewState = .loadingFailed(error.localizedDescription)
+            debugPrint(error)
         }
     }
 }
