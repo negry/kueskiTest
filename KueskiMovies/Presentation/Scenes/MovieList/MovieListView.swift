@@ -17,7 +17,7 @@ struct MovieListView: View {
                 .navigationBarTitleDisplayMode(.large)
         }
         .task {
-            await viewModel.fetchMovies(page: 1)
+            await viewModel.fetchMovies(page: viewModel.currentPage)
         }
     }
     
@@ -48,12 +48,30 @@ struct MovieListView: View {
     
     @ViewBuilder
     private func renderMovieListView() -> some View {
-        List(viewModel.movies, id: \.id) { movie in
-            NavigationLink(destination: MovieDetailView(movie: movie)) {
-                MovieListRowView(movie: movie)
+        List {
+            ForEach(viewModel.movies, id: \.id) { movie in
+                NavigationLink(destination: MovieDetailView(movie: movie,
+                                                            genres: viewModel.genres)) {
+                    MovieListRowView(movie: movie)
+                }
+                .onAppear {
+                    Task {
+                        await viewModel.loadMoreMoviesIfNeeded(currentMovie: movie)
+                    }
+                }
+            }
+            
+            if viewModel.viewState == .loading {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .foregroundStyle(.black)
             }
         }
         .listStyle(.plain)
+        .task {
+            await viewModel.loadGenres()
+        }
     }
 }
 

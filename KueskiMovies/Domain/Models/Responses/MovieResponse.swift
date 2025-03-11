@@ -68,5 +68,9 @@ extension Movie {
             video: false
         )
     }
+    
+    func genreNames(from genres: [Genre]) -> [String] {
+        genreIDs.compactMap { id in genres.first { $0.id == id }?.name }
+    }
 }
 

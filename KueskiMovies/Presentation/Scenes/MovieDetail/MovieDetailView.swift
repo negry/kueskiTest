@@ -2,10 +2,10 @@ import SwiftUI
 
 struct MovieDetailView: View {
     let movie: Movie
+    let genres: [Genre]
     
     private var genreNames: [String] {
-        let genres = ["Action", "Drama", "Comedy", "Thriller", "Horror"]
-        return movie.genreIDs.map { genres[$0 % genres.count] }
+        return movie.genreNames(from: genres)
     }
     
     private var posterUrl: URL? {
@@ -18,6 +18,7 @@ struct MovieDetailView: View {
             renderHeaderView()
             
             Text(movie.overview)
+                .font(.callout)
                 .padding()
         }
         .navigationTitle(movie.title)
@@ -33,7 +34,7 @@ struct MovieDetailView: View {
                         .resizable()
                         .aspectRatio(1.8, contentMode: .fill)
                         .overlay(
-                            Color.black.opacity(0.6)
+                            Color.black.opacity(0.7)
                         )
                 } placeholder: {
                     ProgressView()
@@ -49,6 +50,8 @@ struct MovieDetailView: View {
                 
                 Text("\(movie.releaseDate)")
                 Text("Genres: \(genreNames.joined(separator: ", "))")
+                    .font(.callout)
+                    .bold()
             }
             .foregroundColor(.white)
             .padding()
@@ -57,5 +60,12 @@ struct MovieDetailView: View {
 }
 
 #Preview {
-    MovieDetailView(movie: .mock)
+    MovieDetailView(movie: .mock, genres:
+                        [
+                            Genre(id: 28, name: "Action"),
+                                           
+                            Genre(id: 53, name: "Adventure"),
+                                           
+                            Genre(id: 80, name: "Comedy")
+                        ])
 }
