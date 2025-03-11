@@ -1,0 +1,14 @@
+//
+//  Common.xcconfig
+//  KueskiMovies
+//
+//  Created by Alonso Orozco on 10/03/25.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+BEARER_TOKEN = eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5NmNhYWYyNWM4M2Y0NDllYjFlMjkwMzVlZmQzMjc0OSIsIm5iZiI6MTYwOTIwNzg0MS41Miwic3ViIjoiNWZlYTkwMjEwZTY0YWYwMDQwYTE4OWZmIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.NZRPqHOTeESP0vxfDARZCDlAyFZ39
+
+BASE_URL = api.themoviedb.org
+
